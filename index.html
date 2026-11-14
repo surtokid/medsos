@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#FFE5EC">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Surya Tokoku - Official Beauty Links ✨</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Quicksand & Fredoka untuk kesan cute dan membulat -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome untuk Ikon Sosial Media -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Canvas Confetti untuk efek perayaan -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        quicksand: ['Quicksand', 'sans-serif'],
+                    },
+                    colors: {
+                        beauty: {
+                            light: '#FFF5F8',
+                            pink: '#FF8FAB',
+                            darkpink: '#FB6F92',
+                            soft: '#FFE5EC',
+                            lavender: '#E2CFEA',
+                            mint: '#D8F3DC',
+                            peach: '#FFD6BA'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(180deg, #FFE5EC 0%, #FFF0F5 50%, #F3E8FF 100%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            user-select: none;
+            /* Mendukung tinggi layar HP modern secara presisi */
+            min-height: 100dvh;
+        }
+
+        h1, h2, .font-cute {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* Simulasi Bingkai Aplikasi Mobile agar tetap proporsional di semua ukuran HP */
+        .mobile-shell {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100dvh;
+            margin: 0 auto;
+            position: relative;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 0 40px rgba(251, 111, 146, 0.18);
+            padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+        }
+
+        /* Animasi Mengambang (Floating) */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(4deg); }
+        }
+        @keyframes floatReverse {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(8px) rotate(-4deg); }
+        }
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-4deg); }
+            50% { transform: rotate(4deg); }
+        }
+        @keyframes shine {
+            0% { left: -100%; }
+            25% { left: 120%; }
+            100% { left: 120%; }
+        }
+
+        .animate-float { animation: float 3.5s ease-in-out infinite; }
+        .animate-float-reverse { animation: floatReverse 4.5s ease-in-out infinite; }
+        .animate-wiggle { animation: wiggle 2.5s ease-in-out infinite; }
+
+        /* Gaya Tombol Mobile Touch-Friendly 3D */
+        .cute-btn {
+            position: relative;
+            transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease;
+            border: 2.5px solid #FFFFFF;
+            box-shadow: 0 5px 0px #F3B0C3, 0 8px 16px rgba(251, 111, 146, 0.22);
+            touch-action: manipulation;
+        }
+
+        /* Efek saat disentuh jari di layar HP */
+        .cute-btn:active {
+            transform: translateY(4px) scale(0.98);
+            box-shadow: 0 1px 0px #F3B0C3, 0 3px 8px rgba(251, 111, 146, 0.18);
+        }
+
+        /* Pembungkus efek kilau agar tidak memotong badge di atas tombol */
+        .btn-shine-wrap {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            border-radius: 0.9rem;
+            pointer-events: none;
+        }
+
+        /* Efek Kilau pada Tombol Utama */
+        .btn-shine-wrap::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -100%;
+            width: 45%;
+            height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(25deg);
+            animation: shine 5s infinite;
+            pointer-events: none;
+        }
+
+        /* Sparkle Touch Effect */
+        .sparkle-particle {
+            pointer-events: none;
+            position: fixed;
+            z-index: 9999;
+            font-size: 18px;
+            animation: fadeUp 0.7s ease-out forwards;
+        }
+
+        @keyframes fadeUp {
+            0% { opacity: 1; transform: translateY(0) scale(0.8) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(-30px) scale(1.25) rotate(35deg); }
+        }
+    </style>
+</head>
+<body class="selection:bg-pink-300 selection:text-white">
+
+    <!-- Container Khusus Layar Handphone (Full-Height Mobile App View) -->
+    <main class="mobile-shell flex flex-col justify-between overflow-hidden">
+
+        <!-- Banner Header Melengkung Khas Aplikasi Mobile -->
+        <div class="relative bg-gradient-to-b from-pink-200/90 via-rose-100/80 to-transparent pt-6 pb-2 px-4 rounded-b-[2.5rem]">
+            <!-- Ornamen Kosmetik Mengambang di Header HP -->
+            <span class="absolute top-6 left-5 text-2xl animate-float opacity-85 pointer-events-none">💄</span>
+            <span class="absolute top-8 right-6 text-2xl animate-float-reverse opacity-85 pointer-events-none">🎀</span>
+            <span class="absolute bottom-4 left-8 text-xl animate-wiggle opacity-75 pointer-events-none">✨</span>
+            <span class="absolute bottom-6 right-9 text-xl animate-wiggle opacity-75 pointer-events-none">🌸</span>
+
+            <!-- Bagian Profil / Avatar -->
+            <div class="flex flex-col items-center text-center relative z-10 mt-1">
+                <div class="relative cursor-pointer active:scale-95 transition transform" onclick="triggerConfetti()">
+                    <div class="absolute -inset-1 bg-gradient-to-tr from-pink-400 via-rose-300 to-purple-400 rounded-full blur-sm opacity-75"></div>
+                    
+                    <div class="relative w-24 h-24 rounded-full bg-white border-4 border-white shadow-md flex items-center justify-center overflow-hidden">
+                        <!-- Logo Resmi Suryatokoku.id -->
+                        <img src="Logo Surtok.png" alt="Logo Suryatokoku.id" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/200x200/FFE5EC/FB6F92?text=Surtok';">
+                    </div>
+
+                    <!-- Badge Verified & Pita -->
+                    <div class="absolute -bottom-0.5 -right-0.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white w-7 h-7 rounded-full border-2 border-white flex items-center justify-center shadow">
+                        <i class="fa-solid fa-check text-[11px]"></i>
+                    </div>
+                    <div class="absolute -top-1.5 -left-1.5 text-xl transform -rotate-12 animate-wiggle">🎀</div>
+                </div>
+
+                <!-- Nama & Sapaan Singkat Padat untuk Layar HP -->
+                <div class="mt-2.5">
+                    <h1 class="text-2xl font-bold text-rose-500 tracking-wide flex items-center justify-center gap-1">
+                        <span>Suryatokoku.id</span>
+                        <span class="text-lg">🌸</span>
+                    </h1>
+                    <p class="text-[11px] font-bold uppercase tracking-wider text-pink-500 mt-0.5 bg-white/90 inline-block px-3 py-0.5 rounded-full border border-pink-200 shadow-sm">
+                        ✨ Official Beauty Community ✨
+                    </p>
+                    <p class="text-gray-600 text-xs mt-2 px-3 leading-relaxed font-semibold">
+                        Hai <span class="text-rose-500 font-bold">Beauty Bestie!</span> 💖 Tap tombol di bawah buat gabung & follow sosmed resmi kita yaa! 💄🛍️
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daftar Tombol Sosial Media (Ukuran Pas Jari / Thumb-Friendly) -->
+        <div class="px-4 mt-2 space-y-3.5 flex-1">
+
+            <!-- Divider Kecil -->
+            <div class="flex items-center justify-center gap-2 mb-1">
+                <div class="h-0.5 flex-1 bg-gradient-to-r from-transparent via-pink-200 to-pink-300 rounded-full"></div>
+                <span class="text-[11px] font-bold text-pink-400 uppercase tracking-widest">🌷 Pilih Sosial Media 🌷</span>
+                <div class="h-0.5 flex-1 bg-gradient-to-l from-transparent via-pink-200 to-pink-300 rounded-full"></div>
+            </div>
+
+            <!-- 1. Follow IG suryatokoku.id -->
+            <a href="https://www.instagram.com/suryatokoku.id" target="_blank" rel="noopener noreferrer" 
+               class="cute-btn block w-full rounded-2xl bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500 p-3 text-white">
+                <div class="btn-shine-wrap"></div>
+                <div class="relative z-10 flex items-center justify-between gap-2.5">
+                    <div class="flex items-center gap-3 min-w-0 flex-1">
+                        <div class="w-11 h-11 rounded-xl bg-white text-rose-500 flex items-center justify-center text-2xl shadow-sm shrink-0">
+                            <i class="fa-brands fa-instagram"></i>
+                        </div>
+                        <div class="text-left min-w-0 flex-1">
+                            <span class="font-cute font-semibold text-sm sm:text-[15px] leading-tight block">Follow IG suryatokoku.id</span>
+                            <p class="text-[11px] text-pink-50 font-medium leading-snug mt-0.5">@suryatokoku.id • Promo & Katalog ✨</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/25 px-2.5 py-1.5 rounded-xl flex items-center gap-1 text-[11px] font-bold shrink-0">
+                        <span>Buka</span>
+                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 2. Follow IG suryabeautyfest -->
+            <div class="pt-1.5">
+                <a href="https://www.instagram.com/suryatokokubeautyfest" target="_blank" rel="noopener noreferrer" 
+                   class="cute-btn block w-full rounded-2xl bg-gradient-to-r from-fuchsia-400 via-pink-400 to-rose-400 p-3 pt-3.5 text-white relative">
+                    <span class="absolute -top-3 right-3 z-20 bg-yellow-300 text-rose-700 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border-2 border-white shadow-sm uppercase tracking-wide whitespace-nowrap">
+                        🎉 Beauty Event
+                    </span>
+                    <div class="relative z-10 flex items-center justify-between gap-2.5">
+                        <div class="flex items-center gap-3 min-w-0 flex-1">
+                            <div class="w-11 h-11 rounded-xl bg-white text-fuchsia-500 flex items-center justify-center text-xl shadow-sm shrink-0">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+                            <div class="text-left min-w-0 flex-1">
+                                <span class="font-cute font-semibold text-sm sm:text-[15px] leading-tight block">Follow IG suryabeautyfest</span>
+                                <p class="text-[11px] text-pink-50 font-medium leading-snug mt-0.5">@suryatokokubeautyfest • Info Event 👑</p>
+                            </div>
+                        </div>
+                        <div class="bg-white/25 px-2.5 py-1.5 rounded-xl flex items-center gap-1 text-[11px] font-bold shrink-0">
+                            <span>Buka</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 3. Saluran IG suryatokoku.id -->
+            <a href="https://www.instagram.com/channel/AbboHvVLdKnTQFRB/" target="_blank" rel="noopener noreferrer" 
+               class="cute-btn block w-full rounded-2xl bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 p-3 text-white">
+                <div class="relative z-10 flex items-center justify-between gap-2.5">
+                    <div class="flex items-center gap-3 min-w-0 flex-1">
+                        <div class="w-11 h-11 rounded-xl bg-white text-purple-500 flex items-center justify-center text-xl shadow-sm shrink-0">
+                            <i class="fa-solid fa-bullhorn"></i>
+                        </div>
+                        <div class="text-left min-w-0 flex-1">
+                            <span class="font-cute font-semibold text-sm sm:text-[15px] leading-tight block">Saluran IG suryatokoku.id</span>
+                            <p class="text-[11px] text-purple-50 font-medium leading-snug mt-0.5">Broadcast Channel • Diskon Rahasia 💌</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/25 px-2.5 py-1.5 rounded-xl flex items-center gap-1 text-[11px] font-bold shrink-0">
+                        <span>Join</span>
+                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 4. TikTok suryatokoku.id -->
+            <a href="https://www.tiktok.com/@suryatokoku.id" target="_blank" rel="noopener noreferrer" 
+               class="cute-btn block w-full rounded-2xl bg-gradient-to-r from-slate-800 via-pink-600 to-cyan-500 p-3 text-white">
+                <div class="relative z-10 flex items-center justify-between gap-2.5">
+                    <div class="flex items-center gap-3 min-w-0 flex-1">
+                        <div class="w-11 h-11 rounded-xl bg-white text-slate-800 flex items-center justify-center text-2xl shadow-sm shrink-0">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </div>
+                        <div class="text-left min-w-0 flex-1">
+                            <span class="font-cute font-semibold text-sm sm:text-[15px] leading-tight block">TikTok suryatokoku.id</span>
+                            <p class="text-[11px] text-pink-50 font-medium leading-snug mt-0.5">@suryatokoku.id • Racun & Live Seru 🎵</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/25 px-2.5 py-1.5 rounded-xl flex items-center gap-1 text-[11px] font-bold shrink-0">
+                        <span>Buka</span>
+                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 5. Saluran WhatsApp Resmi suryatokoku.id -->
+            <div class="pt-1.5">
+                <a href="https://whatsapp.com/channel/0029VbC7wYrADTODLH9f8g0a" target="_blank" rel="noopener noreferrer" 
+                   class="cute-btn block w-full rounded-2xl bg-gradient-to-r from-emerald-400 via-teal-400 to-green-500 p-3 pt-3.5 text-white relative">
+                    <div class="btn-shine-wrap"></div>
+                    <span class="absolute -top-3 right-3 z-20 bg-white text-emerald-600 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border-2 border-emerald-200 shadow-sm uppercase tracking-wide whitespace-nowrap">
+                        💬 Fast Update
+                    </span>
+                    <div class="relative z-10 flex items-center justify-between gap-2.5">
+                        <div class="flex items-center gap-3 min-w-0 flex-1">
+                            <div class="w-11 h-11 rounded-xl bg-white text-emerald-500 flex items-center justify-center text-2xl shadow-sm shrink-0">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <div class="text-left min-w-0 flex-1">
+                                <span class="font-cute font-semibold text-sm sm:text-[15px] leading-tight block">Saluran WhatsApp Resmi suryatokoku.id</span>
+                                <p class="text-[11px] text-emerald-50 font-medium leading-snug mt-0.5">Info Promo & Katalog via WA 💚</p>
+                            </div>
+                        </div>
+                        <div class="bg-white/25 px-2.5 py-1.5 rounded-xl flex items-center gap-1 text-[11px] font-bold shrink-0">
+                            <span>Join</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Pesan Manis Bawah -->
+            <div class="mt-5 bg-white/85 border-2 border-pink-200 rounded-2xl p-3 text-center relative shadow-sm">
+                <p class="text-[11px] text-gray-600 font-semibold leading-relaxed">
+                    🔔 <span class="text-rose-500 font-bold">Tips Bestie:</span> Nyalakan lonceng notifikasi di semua sosmed kita biar nggak ketinggalan Flash Sale & Giveaway! 🌷✨
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-5 mb-2 text-center px-4">
+            <p class="text-[11px] font-bold text-pink-400 flex items-center justify-center gap-1">
+                <span>Made with</span>
+                <i class="fa-solid fa-heart text-rose-400 animate-bounce"></i>
+                <span>for Suryatokoku.id Lovers</span>
+            </p>
+        </footer>
+
+    </main>
+
+    <!-- Bottom Sticky Bar Khusus Handphone (Tombol Share ke Bestie di Tengah Bawah) -->
+    <div class="fixed bottom-0 left-0 right-0 z-40 pointer-events-none flex justify-center">
+        <div class="w-full max-w-[430px] px-4 pb-4 pt-2 bg-gradient-to-t from-pink-100/95 via-pink-50/80 to-transparent pointer-events-auto flex justify-center">
+            <button onclick="openShareModal()" class="w-full max-w-[240px] py-3 px-6 rounded-full bg-gradient-to-r from-pink-400 to-rose-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg border-2 border-white transition active:scale-95">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Share ke Bestie</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Bottom Sheet Share Modal (Gaya Drawer HP dari Bawah) -->
+    <div id="shareModal" class="fixed inset-0 bg-pink-950/40 backdrop-blur-sm z-50 hidden items-end justify-center" onclick="if(event.target === this) closeShareModal()">
+        <div class="bg-white border-t-4 border-pink-200 rounded-t-[2rem] max-w-[430px] w-full p-6 text-center shadow-2xl transform transition-all duration-300 translate-y-full" id="shareModalContent">
+            <!-- Handle Bar Khas Bottom Sheet Mobile -->
+            <div class="w-12 h-1.5 bg-pink-200 rounded-full mx-auto mb-4"></div>
+
+            <div class="w-12 h-12 rounded-full bg-pink-100 text-rose-500 mx-auto flex items-center justify-center text-2xl mb-2 shadow-inner">
+                🎀
+            </div>
+            <h3 class="font-cute text-lg font-bold text-rose-500">Ajak Bestie Kamu! ✨</h3>
+            <p class="text-xs text-gray-500 mt-1 mb-4">Salin link halaman resmi Surya Tokoku & kirim ke grup WhatsApp atau IG temanmu!</p>
+            
+            <!-- Kotak Copy Link -->
+            <div class="flex items-center bg-pink-50 border-2 border-pink-200 rounded-xl p-1.5 mb-4">
+                <input type="text" id="shareUrlInput" readonly class="bg-transparent text-xs text-gray-600 w-full px-2 focus:outline-none font-medium truncate" value="https://www.instagram.com/suryatokoku.id">
+                <button onclick="copyPageLink()" class="bg-rose-500 active:bg-rose-600 text-white text-xs font-bold px-3.5 py-2.5 rounded-lg shrink-0 transition active:scale-95">
+                    <span id="copyBtnText">Salin Link</span>
+                </button>
+            </div>
+
+            <button onclick="closeShareModal()" class="w-full py-3 rounded-xl bg-gray-100 active:bg-gray-200 text-gray-600 font-bold text-xs transition">
+                Tutup 🌸
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notifikasi Kecil (Di Atas Bottom Bar) -->
+    <div id="cuteToast" class="fixed bottom-20 left-1/2 -translate-x-1/2 bg-white border-2 border-pink-300 text-rose-500 px-4 py-2 rounded-full shadow-lg text-xs font-bold flex items-center gap-2 z-50 transition-all duration-300 opacity-0 pointer-events-none translate-y-4 whitespace-nowrap">
+        <span>💖</span>
+        <span id="toastMessage">Terima kasih Bestie!</span>
+    </div>
+
+    <script>
+        // Set URL saat ini di kotak input share
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlInput = document.getElementById('shareUrlInput');
+            if (window.location.href && !window.location.href.startsWith('about:')) {
+                urlInput.value = window.location.href;
+            }
+        });
+
+        // Fungsi Efek Confetti Cute Pastel
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 45,
+                    spread: 65,
+                    origin: { y: 0.55 },
+                    colors: ['#FF8FAB', '#FB6F92', '#FFE5EC', '#FFD166', '#E2CFEA']
+                });
+            }
+        }
+
+        // Fungsi Tombol Love Besties
+        let loved = false;
+        function triggerBestieLove() {
+            const loveSpan = document.getElementById('loveCount');
+            loved = !loved;
+            if (loved) {
+                loveSpan.textContent = "1.25k";
+                triggerConfetti();
+                showToast("Yeay! Makasih lovenya Beauty Bestie! 💖");
+            } else {
+                loveSpan.textContent = "1.2k";
+                showToast("Sampai jumpa di sosmed kami yaa! 🌸");
+            }
+        }
+
+        // Fungsi Menampilkan Toast
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('cuteToast');
+            const toastMsg = document.getElementById('toastMessage');
+            toastMsg.textContent = msg;
+            toast.classList.remove('opacity-0', 'translate-y-4');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'translate-y-4');
+            }, 2400);
+        }
+
+        // Fungsi Bottom Sheet Modal Share
+        function openShareModal() {
+            // Gunakan Web Share API bawaan HP jika tersedia, atau tampilkan Bottom Sheet
+            const modal = document.getElementById('shareModal');
+            const content = document.getElementById('shareModalContent');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                content.classList.remove('translate-y-full');
+                content.classList.add('translate-y-0');
+            }, 20);
+        }
+
+        function closeShareModal() {
+            const modal = document.getElementById('shareModal');
+            const content = document.getElementById('shareModalContent');
+            content.classList.remove('translate-y-0');
+            content.classList.add('translate-y-full');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 250);
+        }
+
+        // Salin Link dengan Fallback document.execCommand
+        function copyPageLink() {
+            const input = document.getElementById('shareUrlInput');
+            const copyBtnText = document.getElementById('copyBtnText');
+            input.select();
+            input.setSelectionRange(0, 99999);
+            try {
+                document.execCommand('copy');
+                copyBtnText.textContent = "Tersalin! ✨";
+                showToast("Link berhasil disalin! Siap kirim ke Bestie 🎀");
+                setTimeout(() => {
+                    copyBtnText.textContent = "Salin Link";
+                    closeShareModal();
+                }, 1200);
+            } catch (err) {
+                showToast("Silakan salin link secara manual yaa 🌸");
+            }
+        }
+
+        // Efek Sparkle Lucu saat layar HP disentuh (Touch & Click)
+        const cuteEmojis = ['✨', '💖', '🌸', '🎀', '🌷', '💄'];
+        function spawnSparkle(x, y) {
+            const particle = document.createElement('span');
+            particle.className = 'sparkle-particle';
+            particle.textContent = cuteEmojis[Math.floor(Math.random() * cuteEmojis.length)];
+            particle.style.left = (x - 10) + 'px';
+            particle.style.top = (y - 10) + 'px';
+            document.body.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 700);
+        }
+
+        document.addEventListener('click', (e) => {
+            spawnSparkle(e.clientX, e.clientY);
+        });
+    </script>
+</body>
+</html>
